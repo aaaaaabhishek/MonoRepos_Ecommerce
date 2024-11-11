@@ -1,0 +1,32 @@
+spring:
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://usermodule  # Uses Eureka name 'usermodule'
+          predicates:
+            - Path=/auth/register
+        - id: usermodule
+          uri: lb://usermodule
+          predicates:
+            - Path=/auth/**
+            - Path=/api/users/**
+      filters:
+        - name: AuthenticationFilterUpdate  # Ensure this filter is correctly configured
+
+application:
+  name: Ecommerce-GATEWAY
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+security:
+  jwt:
+    refreshExpirationTime: 3600000  # Set this to the desired duration in milliseconds

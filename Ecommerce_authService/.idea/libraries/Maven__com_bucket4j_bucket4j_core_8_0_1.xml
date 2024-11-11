@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.bucket4j:bucket4j-core:8.0.1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/bucket4j/bucket4j-core/8.0.1/bucket4j-core-8.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/bucket4j/bucket4j-core/8.0.1/bucket4j-core-8.0.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/bucket4j/bucket4j-core/8.0.1/bucket4j-core-8.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Razorpay Payment</title>
+</head>
+<body>
+
+<h2>Order Summary</h2>
+<p>Amount: ₹<span th:text="${amount}"></span></p>
+<p>Order ID: <span th:text="${orderId}"></span></p>
+
+<!-- Button to trigger the payment -->
+<button id="payNowButton">Pay Now</button>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {
+        "key": "rzp_test_flVhMltfkA4UtC", // Your Razorpay key ID
+        "amount": ${amount}, // Amount in paise
+        "currency": "INR",
+        "name": "Your Academy Name",
+        "description": "Test Payment",
+        "image": "",
+        "order_id": "${orderId}", // Use direct Thymeleaf expression
+        "handler": function (response) {
+            // Handle the success callback
+            console.log(response);
+
+            // Send payment details to your server
+            fetch('/api/payment/success', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    orderId: response.razorpay_order_id,
+                    paymentId: response.razorpay_payment_id,
+                    signature: response.razorpay_signature
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                // Optionally redirect or show a success message
+            })
+            .catch(error => console.error('Error:', error));
+        },
+        "prefill": {
+            "name": "Customer Name",
+            "email": "customer@example.com",
+            "contact": "9876543210"
+        },
+        "notes": {
+            "notes_key_1": "Tea, Earl Grey, Hot"
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+
+    var rzp = new Razorpay(options);
+
+    document.getElementById('payNowButton').addEventListener('click', function () {
+        rzp.open();
+    });
+</script>
+
+</body>
+</html>

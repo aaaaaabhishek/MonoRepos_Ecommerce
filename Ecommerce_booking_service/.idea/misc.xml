@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/booking/pom.xml" />
+        <option value="$PROJECT_DIR$/../Ecommerce_payment_module/payment/pom.xml" />
+        <option value="$PROJECT_DIR$/../Ecommerce_service_provider/service/pom.xml" />
+        <option value="$PROJECT_DIR$/../Ecommerce_user/module/pom.xml" />
+        <option value="$PROJECT_DIR$/../Ecommerce_authService/auth/pom.xml" />
+        <option value="$PROJECT_DIR$/../Shared_service/shared/pom.xml" />
+        <option value="$PROJECT_DIR$/../Ecommere_Shared_service/shared/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_19" default="true" project-jdk-name="19" project-jdk-type="JavaSDK" />
+</project>

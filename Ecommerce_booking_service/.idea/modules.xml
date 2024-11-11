@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Ecommerce_booking_service.iml" filepath="$PROJECT_DIR$/.idea/Ecommerce_booking_service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Ecommerce_authService/auth/auth.iml" filepath="$PROJECT_DIR$/../Ecommerce_authService/auth/auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/booking/booking.iml" filepath="$PROJECT_DIR$/booking/booking.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Ecommerce_user/module/module.iml" filepath="$PROJECT_DIR$/../Ecommerce_user/module/module.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Ecommerce_payment_module/payment/payment.iml" filepath="$PROJECT_DIR$/../Ecommerce_payment_module/payment/payment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Ecommerce_service_provider/service/service.iml" filepath="$PROJECT_DIR$/../Ecommerce_service_provider/service/service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Ecommere_Shared_service/shared/shared.iml" filepath="$PROJECT_DIR$/../Ecommere_Shared_service/shared/shared.iml" />
+    </modules>
+  </component>
+</project>

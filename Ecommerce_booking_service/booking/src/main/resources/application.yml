@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: Ecom_Booking_Service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/your_database_name  # Replace with your database URL
+    username: root                            # Replace with your database username
+    password: 1234                           # Replace with your database password
+    driver-class-name: com.mysql.cj.jdbc.Driver           # Adjust if using a different database
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+resilience4j:
+  circuitBreaker:
+    instances:
+      bookingBreaker:
+        registerHealthIndicator: true
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        permittedNumberOfCallsInHalfOpenState: 3
+        waitDurationInOpenState: 6000
+        eventConsumerBufferSize: 10
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+  retry:
+    instances:
+      bookingRetry:
+        maxAttempts: 3
+        backoff:
+          delay: 1000
+  ratelimiter:
+    instances:
+      userRateLimiter:
+        limit-refresh-period: 4s
+        limit-for-period: 2
+        timeout-duration: 2s

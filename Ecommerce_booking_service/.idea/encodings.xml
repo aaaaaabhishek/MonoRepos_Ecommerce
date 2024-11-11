@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/../Ecommerce_authService/auth/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../Ecommerce_authService/auth/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/booking/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/booking/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../Ecommerce_payment_module/payment/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../Ecommerce_payment_module/payment/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../Ecommerce_service_provider/service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../Ecommerce_service_provider/service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../Ecommerce_user/module/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../Ecommerce_user/module/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../Ecommere_Shared_service/shared/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../Ecommere_Shared_service/shared/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../Shared_service/shared/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../Shared_service/shared/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

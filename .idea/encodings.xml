@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/Ecommerce_authService/auth/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Ecommerce_authService/auth/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Ecommerce_booking_service/booking/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Ecommerce_booking_service/booking/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Ecommerce_microservice_kafka/kafka/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Ecommerce_microservice_kafka/kafka/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Ecommerce_payment_module/payment/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Ecommerce_payment_module/payment/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Ecommerce_user/module/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Ecommerce_user/module/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

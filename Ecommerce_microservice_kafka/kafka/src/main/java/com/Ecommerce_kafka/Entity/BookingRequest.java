@@ -13,7 +13,10 @@ public class BookingRequest {
     private Long propertyId;
     private Long userId;
     private LocalDate startDate;
-    private LocalDate endDate;
+    public LocalDate endDate;
     private String bookingStatus;
 
+    public BookingRequest(Long propertyId) {
+        this.propertyId=propertyId;
+    }
 }

@@ -1,28 +1,28 @@
 package com.Ecommerce_kafka.service;
 
-import com.Ecommerce_kafka.Entity.Booking;
-import com.Ecommerce_kafka.Entity.BookingRequest;
-import com.Ecommerce_kafka.Entity.Property;
-import com.Ecommerce_kafka.Entity.PropertyBookingConfirmedEvent;
+import com.Ecommerce_kafka.Entity.*;
+import com.Ecommerce_kafka.Exception.PropertyException;
+import com.Ecommerce_kafka.Repository.BookingRepository;
 import com.Ecommerce_kafka.Repository.PropertyRepository;
-import com.Ecommerce_kafka.exception.PropertyException;
-import com.Ecommerce_kafka.exception.PropertyNotFoundException;
-import com.Ecommerce_kafka.model.Property;
-import com.Ecommerce_kafka.repository.PropertyRepository;
 import jakarta.el.PropertyNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Service
 public class PropertyService {
 
     private final PropertyRepository propertyRepository;
     private final Logger logger = LoggerFactory.getLogger(PropertyService.class);
+    private final BookingRepository bookingRepository;
 
-    public PropertyService(PropertyRepository propertyRepository) {
+    public PropertyService(PropertyRepository propertyRepository, BookingRepository bookingRepository) {
         this.propertyRepository = propertyRepository;
+        this.bookingRepository = bookingRepository;
     }
 
     // Method for Kafka Listener - updates status to "BOOKED"
@@ -45,7 +45,7 @@ public class PropertyService {
     @KafkaListener(topics = "booking-failed", groupId = "property-group")
     public void compensateBooking(BookingFailedEvent event) {
         try {
-            Property property = propertyRepository.findById(event.getPropertyId())
+            Property property = propertyRepository.findById(Long.valueOf(event.getPropertyId()))
                     .orElseThrow(() -> new PropertyNotFoundException("Property not found: " + event.getPropertyId()));
 
             property.setStatus("AVAILABLE");
@@ -70,9 +70,20 @@ public class PropertyService {
         Booking booking = new Booking();
         booking.setPropertyId(bookingRequest.getPropertyId());
         booking.setUserId(bookingRequest.getUserId());
-        booking.setBookingDate(bookingRequest.getBookingDate());
+        booking.setBookingDate((bookingRequest.getStartDate()).atStartOfDay());
 
         bookingRepository.save(booking);
     }
+    public List<Property> getAvailableProperties() {
+        return propertyRepository.findByStatus("AVAILABLE");
+    }
+    public Property updatePropertyStatus(Long propertyId, String status) {
+        Property property = propertyRepository.findById(propertyId)
+                .orElseThrow(() -> new PropertyNotFoundException("Property not found with ID: " + propertyId));
+
+        property.setStatus(status);
+        return propertyRepository.save(property);
+    }
+
 
 }

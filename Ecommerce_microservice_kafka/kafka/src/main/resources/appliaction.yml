@@ -1,0 +1,17 @@
+resilience4j.circuitbreaker:
+  instances:
+    paymentService:
+      registerHealthIndicator: true
+      failureRateThreshold: 50
+      slidingWindowSize: 100
+      waitDurationInOpenState: 5000ms
+      permittedNumberOfCallsInHalfOpenState: 10
+
+resilience4j.retry:
+  instances:
+    paymentService:
+      maxAttempts: 3
+      waitDuration: 1000ms
+      retryExceptions:
+        - java.io.IOException
+        - java.net.SocketTimeoutException

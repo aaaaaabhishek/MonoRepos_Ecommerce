@@ -1,22 +1,35 @@
 package com.Ecommerce_kafka.service;
 
-import org.springframework.retry.annotation.CircuitBreaker;
+import com.Ecommerce_kafka.Entity.*;
+import com.Ecommerce_kafka.Exception.PaymentException;
+import com.Ecommerce_kafka.Repository.PaymentRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PaymentService {
 
-    private final KafkaTemplate<String, PaymentEvent> kafkaTemplate;
+    public final KafkaTemplate<String, PaymentFailedEvent> failedKafkaTemplate;
+    public final KafkaTemplate<String,PaymentSuccessEvent> successKafkaTemplate;
+
     private final PaymentRepository paymentRepository;
     private final Logger logger = LoggerFactory.getLogger(PaymentService.class);
 
-    public PaymentService(KafkaTemplate<String, PaymentEvent> kafkaTemplate, PaymentRepository paymentRepository) {
-        this.kafkaTemplate = kafkaTemplate;
+    public PaymentService(KafkaTemplate<String, PaymentFailedEvent> failedKafkaTemplate, KafkaTemplate<String, PaymentSuccessEvent> successKafkaTemplate, PaymentRepository paymentRepository) {
+        this.failedKafkaTemplate = failedKafkaTemplate;
+        this.successKafkaTemplate = successKafkaTemplate;
         this.paymentRepository = paymentRepository;
     }
 
-    @CircuitBreaker(name = "paymentService", fallbackMethod = "paymentFallback")
-    @Retry(name = "paymentService", maxAttempts = 3)
+    @CircuitBreaker(name= "paymentService", fallbackMethod = "paymentFallback")
+    @Retry(name = "paymentService", fallbackMethod = "paymentFallback")
+
     public void processPayment(BookingRequest bookingRequest) {
         try {
             // Process the payment
@@ -24,17 +37,21 @@ public class PaymentService {
 
             if (paymentSuccess) {
                 // Save payment info to DB
-                paymentRepository.save(new Payment(bookingRequest.getUserId(), bookingRequest.getPropertyId(), "SUCCESS"));
+                Payment payment =Payment.builder().userId(bookingRequest.getUserId()).propertyId(bookingRequest.getPropertyId()).paymentStatus("SUCCESS").build();
+
+
+
+                paymentRepository.save(payment);
 
                 // Send payment success event
-                kafkaTemplate.send("payment-success", new PaymentSuccessEvent(bookingRequest.getPropertyId()));
+                successKafkaTemplate.send("payment-success", new PaymentSuccessEvent(bookingRequest.getPropertyId()));
             } else {
-                throw new PaymentException("Payment failed for property " + bookingRequest.getPropertyId());
+                throw new PaymentException("Payment failed for property " + bookingRequest.getPropertyId(), HttpStatus.EXPECTATION_FAILED);
             }
 
         } catch (Exception ex) {
             logger.error("Error during payment processing: {}", ex.getMessage());
-            throw new PaymentException("Payment failed", ex);
+            throw new PaymentException("Payment failed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -47,7 +64,7 @@ public class PaymentService {
         logger.warn("Payment fallback triggered for property: {} due to {}", bookingRequest.getPropertyId(), throwable.getMessage());
 
         // Send failure event to Kafka
-        kafkaTemplate.send("booking-failed", new BookingFailedEvent(bookingRequest.getPropertyId()));
+        failedKafkaTemplate.send("booking-failed", new PaymentFailedEvent(bookingRequest.getPropertyId()));
     }
 
     private boolean processPaymentLogic(BookingRequest bookingRequest) {

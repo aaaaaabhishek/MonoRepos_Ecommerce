@@ -1,5 +1,6 @@
 package com.Ecommerce_kafka.service;
 
+import com.Ecommerce_kafka.Entity.BookingFailedEvent;
 import com.Ecommerce_kafka.Entity.PropertyBookingConfirmedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ public class NotificationService {
     public void sendBookingConfirmation(PropertyBookingConfirmedEvent event) {
         try {
             // Send booking confirmation email
-            emailService.sendConfirmationEmail(event.getPropertyId());
+            emailService.sendConfirmationEmail(String.valueOf(event.getPropertyId()));
             logger.info("Booking confirmation email sent for property: {}", event.getPropertyId());
 
         } catch (Exception ex) {
@@ -32,7 +33,7 @@ public class NotificationService {
     public void sendFailureNotification(BookingFailedEvent event) {
         try {
             // Send booking failure email
-            emailService.sendFailureEmail(event.getPropertyId());
+            emailService.sendFailureEmail(String.valueOf(event.getPropertyId()));
             logger.info("Booking failure email sent for property: {}", event.getPropertyId());
 
         } catch (Exception ex) {

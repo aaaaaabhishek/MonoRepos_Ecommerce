@@ -1,11 +1,12 @@
 package com.Ecommerce_kafka.config;
+
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.listener.ListenerExecutionFailedException;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.listener.ErrorHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.kafka.listener.ErrorHandler;
 
 @Component
 public class KafkaErrorHandler implements ErrorHandler {

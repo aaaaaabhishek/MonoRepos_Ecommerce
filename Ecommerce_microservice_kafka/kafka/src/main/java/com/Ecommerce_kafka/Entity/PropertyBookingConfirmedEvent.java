@@ -13,4 +13,7 @@ public class PropertyBookingConfirmedEvent {
     private Long userId;
     private String bookingDate;
 
+    public PropertyBookingConfirmedEvent(Long propertyId) {
+        this.propertyId=propertyId;
+    }
 }
